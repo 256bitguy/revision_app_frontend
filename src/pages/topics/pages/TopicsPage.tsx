@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AddTopicModal from '../components/AddTopicModal';
 import './TopicsPage.css';
@@ -24,11 +24,19 @@ const TopicsPage = () => {
   return (
     <div className="topics-page">
       <h2>Topics for "{chapterName}" in "{subjectName}"</h2>
-      <ul>
-        {topics.map((t, i) => (
-          <li key={i}>{t.name}</li>
-        ))}
-      </ul>
+     <div className="topic-card-container">
+  {topics.map((t, i) => (
+   <Link
+  key={i}
+  to={`/subjects/${subjectName}/${chapterName}/topics/${encodeURIComponent(t.name)}`}
+  className="topic-card"
+>
+  <h3>{t.name}</h3>
+  <p>Ranking: {t.ranking}</p>
+</Link>
+
+  ))}
+</div>
 
       <button
         className="add-topic-button"

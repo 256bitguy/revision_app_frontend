@@ -8,6 +8,7 @@ const LandingPage = () => (
       <div className="landing-links">
         <Link to="/login" className="landing-button">Login</Link>
         <Link to="/register" className="landing-button">Register</Link>
+        <Link to="/subjects" className="landing-button">Subjects</Link>
       </div>
     </div>
   </div>

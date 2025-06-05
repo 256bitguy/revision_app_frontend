@@ -28,7 +28,6 @@ const ChaptersPage = () => {
       ) : (
         <ul className="chapter-list">
           {chapters
-            .sort((a, b) => a.ranking - b.ranking)
             .map((chap, i) => (
               <li key={i} className="chapter-item">
                 <Link

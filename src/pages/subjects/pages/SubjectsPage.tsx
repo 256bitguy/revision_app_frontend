@@ -26,11 +26,12 @@ const SubjectsPage = () => {
       ) : (
         <ul className="subjects-list">
           {subjects.map((subj, i) => (
-            <Link to={`/subjects/${encodeURIComponent(subj.name)}`}>
+            <Link to={`/subjects/${encodeURIComponent(subj.name)}`}
+             style={{ textDecoration: 'none', color: 'teal', fontWeight: '500' }}>
             <li key={i} className="subject-item">
                        
 
-              <span>{subj.name}</span>
+               <strong>{subj.name}</strong> 
               <span className=" subject-rank">Rank: {subj.ranking}</span>
             </li>
             </Link>

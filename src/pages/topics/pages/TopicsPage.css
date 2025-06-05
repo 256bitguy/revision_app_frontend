@@ -1,29 +1,69 @@
-/* TopicsPage.css */
-
 .topics-page {
   padding: 2rem;
   position: relative;
+  background-color: #f9f9fc;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .topics-page h2 {
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
-.topics-page ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 2rem;
+.topic-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.topic-card {
+  background-color: white;
+  border-left: 5px solid #006699; /* Accent color */
+  border-radius: 12px;
+  padding: 1rem;
+  width: 220px;
+  text-decoration: none;
+  color: #222;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease-in-out;
+}
+
+.topic-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.topic-card p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-left-color: teal;
 }
 
 .add-topic-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #006699;
+  background-color: #6a1b9a; /* Deep Purple */
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 30px;
   border: none;
   cursor: pointer;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.add-topic-button:hover {
+  background-color: #4a148c; /* Darker purple */
 }

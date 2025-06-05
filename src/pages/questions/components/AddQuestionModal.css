@@ -1,0 +1,81 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.modal-box h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.modal-box textarea {
+  resize: vertical;
+}
+
+.modal-box h4 {
+  margin: 1rem 0 0.5rem;
+  color: #444;
+}
+
+.statement-group,
+.option-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-box button {
+  padding: 0.5rem 1rem;
+  margin-top: 0.8rem;
+  background-color: #006699;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-box button:hover {
+  background-color: teal;
+}
+
+.modal-box button + button {
+  margin-left: 0.5rem;
+  background-color: #aaa;
+}
+
+.modal-box button + button:hover {
+  background-color: #888;
+}
