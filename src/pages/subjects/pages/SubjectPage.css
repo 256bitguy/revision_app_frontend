@@ -1,0 +1,78 @@
+.subjects-container {
+  padding: 2rem;
+  max-width: 90%;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+}
+
+.subjects-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.subjects-empty {
+  color: #777;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.subjects-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.subject-item {
+  background-color: #f4f4f4;
+  margin-bottom: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #333;
+}
+
+.subject-rank {
+  font-weight: 500;
+  color: #6c63ff;
+}
+
+.add-subject-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #6c63ff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.add-subject-button:hover {
+  background-color: #574fd3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .subjects-title {
+    font-size: 1.5rem;
+  }
+
+  .subject-item {
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.95rem;
+  }
+
+  .add-subject-button {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+}

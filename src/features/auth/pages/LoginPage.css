@@ -1,0 +1,38 @@
+/* LoginPage.css */
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa, #d0e2ff);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  padding: 40px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.login-box h2 {
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+/* Tablet-specific tweaks */
+@media (min-width: 600px) and (max-width: 768px) {
+  .login-box {
+    padding: 50px 30px;
+  }
+
+  .login-box h2 {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,63 @@
+.chapters-page {
+  padding: 2rem;
+  max-width: 700px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+}
+
+.heading {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.heading span {
+  color: teal;
+}
+
+.no-chapters {
+  color: #888;
+  font-style: italic;
+}
+
+.chapter-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 2rem;
+}
+
+.chapter-item {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  background-color: #f9f9f9;
+  border-left: 5px solid teal;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rank {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.add-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: teal;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-btn:hover {
+  background-color: #007373;
+}
