@@ -31,7 +31,7 @@ const SubjectsPage = () => {
                        
 
               <span>{subj.name}</span>
-              <span className="subject-rank">Rank: {subj.ranking}</span>
+              <span className=" subject-rank">Rank: {subj.ranking}</span>
             </li>
             </Link>
           ))}
