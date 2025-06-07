@@ -1,56 +1,94 @@
-import { useState, } from 'react';
+import { useState } from 'react';
 import './LoginForm.css';
 
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { loginUser } from '../slices/authAPI';
+import { useNavigate } from 'react-router-dom';
+import { setUser } from '../slices/authSlice';
+
 interface LoginFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
 const LoginForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = useAppSelector((state) => state.auth);
+
   const [formData, setFormData] = useState<LoginFormData>({
-    email: '',
-    password: ''
+    username: '',
+    password: '',
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add real login logic here
-    console.log('Login submitted:', formData);
+    const value = await dispatch(loginUser(formData));
+    if (value.payload?.statusCode == 200) {
+      dispatch(setUser(value.payload.data));
+      navigate('/profile');
+    }
+    console.log(value.payload?.statusCode, 'value');
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
+    <>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <button type="submit" className="login-submit">Login</button>
-    </form>
+        <button type="submit" className="login-submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+
+        {error && <p className="error-message">{error}</p>}
+      </form>
+
+      <div style={{ marginTop: '12px', textAlign: 'center' }}>
+        <button
+          type="button"
+          className="register-button"
+          onClick={() => navigate('/register')}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: '#007bff',
+            cursor: 'pointer',
+            fontSize: '0.9rem',
+            textDecoration: 'underline',
+            padding: 0,
+          }}
+        >
+          Don't have an account? Register
+        </button>
+      </div>
+    </>
   );
 };
 

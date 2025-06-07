@@ -1,55 +1,46 @@
-import { useState  } from 'react';
-import './RegisterForm.css';
-
-interface RegisterFormData {
-  email: string;
-  password: string;
-  avatar: File | null;
-  coverImage: File | null;
-  username: string;
-  fullName: string;
-}
+import { useState } from "react";
+ 
+import type { RootState } from "../../../store/rootReducer";
+import { register, type RegisterPayload } from "../slices/authSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { useNavigate } from "react-router-dom";
+// your root state type
 
 const RegisterForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = useAppSelector((state: RootState) => state.auth);
+
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<RegisterFormData>({
-    email: '',
-    password: '',
-    avatar: null,
-    coverImage: null,
-    username: '',
-    fullName: '',
+  const [formData, setFormData] = useState<RegisterPayload>({
+    email: "",
+    password: "",
+    avatar: null as File | null,
+    coverImage: null as File | null,
+    username: "",
+    fullName: "",
   });
 
   const handleChange = (e: any) => {
     const { name, value, files } = e.target;
-
-    if (files && (name === 'avatar' || name === 'coverImage')) {
-      setFormData(prev => ({ ...prev, [name]: files[0] }));
+    if (files && (name === "avatar" || name === "coverImage")) {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    // Prepare payload
-    const payload = {
-      email: formData.email,
-      password: formData.password,
-      avatar: formData.avatar,       // You may need to upload this file separately
-      coverImage: formData.coverImage || null,
-      username: formData.username.toLowerCase(),
-      fullName: formData.fullName,
-    };
-
-    console.log('Register with:', payload);
-
-    // TODO: handle form submission here, e.g. send API request
+    const success = await dispatch(register(formData));
+    console.log(success,"dekhe jara")
+    if(success.payload == 200 ){
+      navigate('/login')
+    }
   };
 
   return (
@@ -106,7 +97,9 @@ const RegisterForm: React.FC = () => {
               accept="image/*"
               onChange={handleChange}
             />
-            {formData.coverImage && <small>Selected: {formData.coverImage.name}</small>}
+            {formData.coverImage && (
+              <small>Selected: {formData.coverImage.name}</small>
+            )}
           </div>
         </>
       )}
@@ -147,19 +140,17 @@ const RegisterForm: React.FC = () => {
         )}
 
         {step < 3 ? (
-          <button
-            type="button"
-            onClick={nextStep}
-            className="btn-primary"
-          >
+          <button type="button" onClick={nextStep} className="btn-primary">
             Next
           </button>
         ) : (
-          <button type="submit" className="btn-primary">
-            Submit
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Registering..." : "Submit"}
           </button>
         )}
       </div>
+
+      {error && <p className="error-message">{error}</p>}
     </form>
   );
 };
