@@ -1,0 +1,60 @@
+.users-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  justify-content: center;
+}
+
+.user-card {
+  background-color: #91ddd4;
+  color: #fff;
+  width: 260px;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(175, 26, 26, 0.3);
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user-card:hover {
+  transform: scale(1.02);
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 40%;
+  object-fit: cover;
+  border: 2px solid #888;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.user-info p {
+  margin: 2px 0;
+  font-size: 1 rem;
+  color: #ed1c1caa;
+}
+
+.created-at {
+  font-size: 0.8rem;
+  color: #100909;
+}
+
+.loading {
+  color: rgb(161, 25, 25);
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
