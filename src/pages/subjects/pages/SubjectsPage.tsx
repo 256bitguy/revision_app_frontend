@@ -1,38 +1,44 @@
 import { useEffect, useState } from 'react';
 import AddSubjectModal from '../components/AddSubjectModal';
 import './SubjectPage.css';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { fetchSubjectsByUser } from '../slices/subjectAPI';
 import { Link } from 'react-router-dom';
 
+  
 const SubjectsPage = () => {
-  const [subjects, setSubjects] = useState<{ name: string; ranking: number }[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector(state => state.auth.user?._id);
+  const subject = useAppSelector(state => state.subjects.subjects);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('subjects') || '[]');
-    setSubjects(saved);
-  }, [modalOpen]);
+    if (userId) {
+      dispatch(fetchSubjectsByUser(userId));
+    }
+   }, [dispatch, userId, modalOpen]); // Re-fetch subjects when modal closes (subject might be added)
 
-  const handleAdd = (subject: { name: string; ranking: number }) => {
-    const updated = [...subjects, subject];
-    setSubjects(updated);
-    localStorage.setItem('subjects', JSON.stringify(updated));
-  };
+  // const handleAdd = () => {
+  
+  // };
 
   return (
     <div className="subjects-container">
       <h2 className="subjects-title">Your Subjects</h2>
-      {subjects.length === 0 ? (
+
+    
+{subject.length === 0 ? (
         <p className="subjects-empty">No subjects added yet.</p>
       ) : (
         <ul className="subjects-list">
-          {subjects.map((subj, i) => (
+          {subject.map((subj, i) => (
             <Link to={`/subjects/${encodeURIComponent(subj.name)}`}
              style={{ textDecoration: 'none', color: 'teal', fontWeight: '500' }}>
             <li key={i} className="subject-item">
                        
 
                <strong>{subj.name}</strong> 
-              <span className=" subject-rank">Rank: {subj.ranking}</span>
+              <span className=" subject-rank">Rank: {subj.rank}</span>
             </li>
             </Link>
           ))}
@@ -46,10 +52,10 @@ const SubjectsPage = () => {
       <AddSubjectModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={handleAdd}
-      />
+       />
     </div>
   );
 };
 
 export default SubjectsPage;
+

@@ -1,23 +1,38 @@
 import { useState } from 'react';
 import './AddSubjectModal.css';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { addSubject } from '../slices/subjectAPI';
 
 interface AddSubjectModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (subject: { name: string; ranking: number }) => void;
+  onSubmit?: () => void;
+}
+interface SubjectInput {
+  name: string;
+  rank: number;
+  author: string;
 }
 
-const AddSubjectModal = ({ isOpen, onClose, onSubmit }: AddSubjectModalProps) => {
+const AddSubjectModal = ({ isOpen, onClose,   }: AddSubjectModalProps) => {
   const [name, setName] = useState('');
-  const [ranking, setRanking] = useState('');
+  const [ranking, setRanking] = useState<number>();
+  const dispatch = useAppDispatch();
+const userId = useAppSelector((state)=>state.auth.user._id);
+// console.log(userId);
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !ranking) return alert("Please fill both fields");
-    onSubmit({ name, ranking: Number(ranking) });
+    const subject :SubjectInput = {
+      name : name,
+      rank : ranking,
+      author :userId    
+    };
+    await dispatch(addSubject(subject));
+ 
     setName('');
-    setRanking('');
     onClose();
   };
 
@@ -36,7 +51,7 @@ const AddSubjectModal = ({ isOpen, onClose, onSubmit }: AddSubjectModalProps) =>
           type="number"
           placeholder="Ranking"
           value={ranking}
-          onChange={(e) => setRanking(e.target.value)}
+          onChange={(e) => setRanking(Number(e.target.value))}
           className="modal-input"
         />
         <div className="modal-buttons">

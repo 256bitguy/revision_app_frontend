@@ -7,15 +7,21 @@ const HomePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (subject: { name: string; ranking: number }) => {
-    const existing = JSON.parse(localStorage.getItem('subjects') || '[]');
-    localStorage.setItem('subjects', JSON.stringify([...existing, subject]));
-    navigate('/subjects');
+  const handleSubmit = () => {
+    
+      navigate('/subjects');
   };
 
   return (
     <div className="home-container">
       <h1 className="home-title">Welcome to Subject Manager</h1>
+      <ul>
+        <li>if you start a course, you can add ClASSES</li>
+        <li>if you start a BOOK, you can add your book NAME</li>
+        <li>if you start a Class, you can add Subjects</li>
+        <li>if you start a Batch , you can add lectures</li>
+        <li>Anything which you want to make notes for custom practice</li>
+      </ul>
       <button className="home-button" onClick={() => setModalOpen(true)}>
         Let's start by adding a subject
       </button>

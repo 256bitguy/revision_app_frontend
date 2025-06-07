@@ -4,7 +4,7 @@ import { fetchSubjectsByUser, addSubject } from './subjectAPI';
 interface Subject {
   _id: string;
   name: string;
-  ranking: number;
+  rank: number;
   userId: string;
 }
 

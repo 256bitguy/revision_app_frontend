@@ -3,16 +3,16 @@ import axiosInstance from '../../../services/axiosInstance';
  
 interface SubjectInput {
   name: string;
-  ranking: number;
-  userId: string;
+  rank: number;
+  author: string;
 }
 
-// Fetch all subjects for a user
+ 
 export const fetchSubjectsByUser = createAsyncThunk(
-  'subjects/fetchByUser',
+  'subjects/author',
   async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/subjects?userId=${userId}`);
+      const response = await axiosInstance.get(`/subjects/author/${userId}`);
       return response.data; // array of subjects
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch subjects');
@@ -20,12 +20,12 @@ export const fetchSubjectsByUser = createAsyncThunk(
   }
 );
 
-// Add a new subject
+ 
 export const addSubject = createAsyncThunk(
-  'subjects/addSubject',
+  'subjects/publish',
   async (subjectData: SubjectInput, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/subjects', subjectData);
+      const response = await axiosInstance.post('/subjects/publish', subjectData);
       return response.data; // newly added subject
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to add subject');
