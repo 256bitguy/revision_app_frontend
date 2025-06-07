@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../../services/axiosInstance';
  
-// Get all chapters by subjectId
 export const fetchChaptersBySubjectId = createAsyncThunk(
   'chapters/fetchBySubject',
   async (subjectId: string, { rejectWithValue }) => {

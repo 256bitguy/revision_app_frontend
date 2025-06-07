@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import './AddTopicsModal.css';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { addChapter } from '../../chapters/slice/chapterAPI';
-import { useParams } from 'react-router-dom';
+ import { useParams } from 'react-router-dom';
 import { addTopic } from '../slice/topicAPI';
 
 interface AddTopicModalProps {
