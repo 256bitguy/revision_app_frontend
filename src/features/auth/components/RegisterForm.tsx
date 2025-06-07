@@ -19,6 +19,7 @@ const RegisterForm: React.FC = () => {
     coverImage: null as File | null,
     username: "",
     fullName: "",
+  
   });
 
   const handleChange = (e: any) => {
@@ -38,7 +39,7 @@ const RegisterForm: React.FC = () => {
 
     const success = await dispatch(register(formData));
     console.log(success,"dekhe jara")
-    if(success.payload == 200 ){
+    if(success.payload == 200){
       navigate('/login')
     }
   };

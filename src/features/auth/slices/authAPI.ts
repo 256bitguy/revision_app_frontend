@@ -20,16 +20,21 @@ export interface User {
   updatedAt: string;
 }
  export interface LoginResponse {
-  user: User;
-  accessToken: string;
-  refreshToken: string;
-}
-
+   statusCode: number;
+   data: {
+     user: User;
+     accessToken: string;
+     refreshToken: string;
+   };
+   message: string;
+   success: boolean;
+ }
+ 
 export const loginUser = createAsyncThunk<
   LoginResponse,
   LoginPayload,
   { rejectValue: string }
->('auth/login', async ({ username, password }, { rejectWithValue }) => {
+>('/users/login', async ({ username, password }, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.post('/users/login', { username, password });
     console.log(res,"res")

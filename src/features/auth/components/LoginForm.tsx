@@ -4,7 +4,7 @@ import './LoginForm.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { loginUser } from '../slices/authAPI';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../slices/authSlice';
+ 
 
 interface LoginFormData {
   username: string;
@@ -29,11 +29,11 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const value = await dispatch(loginUser(formData));
-    if (value.payload?.statusCode == 200) {
-      dispatch(setUser(value.payload.data));
-      navigate('/profile');
+    console.log(value, 'value');
+    if (value) {
+     
+    navigate('/profile');
     }
-    console.log(value.payload?.statusCode, 'value');
   };
 
   return (

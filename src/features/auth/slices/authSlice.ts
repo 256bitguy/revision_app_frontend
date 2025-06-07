@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../../services/axiosInstance';
 import { loginUser } from './authAPI';
 export interface RegisterPayload {
@@ -8,7 +8,7 @@ export interface RegisterPayload {
   coverImage?: File | null;
   username: string;
   fullName: string;
-  error:string | null
+   
 }
 export const register = createAsyncThunk(
   'auth/register',
@@ -53,13 +53,20 @@ export interface User {
   coverImage?: string;
   createdAt: string;
   updatedAt: string;
+  
 }
 
 export interface LoginResponse {
-  user: User;
-  accessToken: string;
-  refreshToken: string;
+  statusCode: number;
+  data: {
+    user: User;
+    accessToken: string;
+    refreshToken: string;
+  };
+  message: string;
+  success: boolean;
 }
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
@@ -92,9 +99,9 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     })
-    .addCase(loginUser.fulfilled, (state, action: PayloadAction<LoginResponse>) => {
-      state.user = action.payload.user;
-      state.token = action.payload.accessToken;
+    .addCase(loginUser.fulfilled, (state, action ) => {
+      state.user = action.payload?.data.user;
+      state.token = action.payload.data.accessToken;
       state.loading = false;
     })
     .addCase(loginUser.rejected, (state, action) => {
