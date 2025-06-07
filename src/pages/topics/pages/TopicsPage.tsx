@@ -2,50 +2,53 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AddTopicModal from '../components/AddTopicModal';
 import './TopicsPage.css';
-
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { fetchTopicsByChapter } from '../slice/topicAPI';
+ 
 const TopicsPage = () => {
-  const { subjectName, chapterName } = useParams();
-  const [topics, setTopics] = useState<{ name: string; ranking: number }[]>([]);
+  const { chapterName, chapterId } = useParams<{ chapterId:string,chapterName: string }>();
   const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
-  const storageKey = `topics_${subjectName}_${chapterName}`;
+  const topics = useAppSelector((state) => state.topics.topics);
+  const loading = useAppSelector((state) => state.topics.loading);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    setTopics(saved);
-  }, [modalOpen, storageKey]);
-
-  const handleAdd = (topic: { name: string; ranking: number }) => {
-    const updated = [...topics, topic];
-    setTopics(updated);
-    localStorage.setItem(storageKey, JSON.stringify(updated));
-  };
+    if (chapterId) {
+      dispatch(fetchTopicsByChapter(chapterId));
+    }
+  }, [modalOpen, chapterName, dispatch]);
 
   return (
     <div className="topics-page">
-      <h2>Topics for "{chapterName}" in "{subjectName}"</h2>
-     <div className="topic-card-container">
-  {topics.map((t, i) => (
-   <Link
-  key={i}
-  to={`/subjects/${subjectName}/${chapterName}/topics/${encodeURIComponent(t.name)}`}
-  className="topic-card"
->
-  <h3>{t.name}</h3>
-  <p>Ranking: {t.ranking}</p>
-</Link>
+      <h2 className="heading">
+       {chapterName}
+      </h2>
 
-  ))}
-</div>
+      {loading ? (
+        <div className="loader">Loading topics...</div>
+      ) : topics.length === 0 ? (
+        <p className="no-topics">No topics added yet.</p>
+      ) : (
+        <div className="topic-card-container fade-in">
+          {topics.map((t) => (
+            <Link
+              key={t._id}
+              to={`/topics/${encodeURIComponent(t._id)}/${t.name}`}
+              className="topic-card"
+            >
+              <h3>{t.name}</h3>
+              <p>Ranking: {t.ranking}</p>
+            </Link>
+          ))}
+        </div>
+      )}
 
-      <button
-        className="add-topic-button"
-        onClick={() => setModalOpen(true)}
-      >
+      <button className="add-topic-button" onClick={() => setModalOpen(true)}>
         + ADD
       </button>
 
-      <AddTopicModal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleAdd} />
+      <AddTopicModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 };

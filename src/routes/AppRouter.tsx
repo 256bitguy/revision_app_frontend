@@ -20,9 +20,9 @@ const AppRouter = () => (
      <Route path="/users" element={<AllUsers />} /> 
 <Route path="/home" element={<HomePage />} />
 <Route path="/subjects" element={<SubjectsPage />} />
-<Route path="/subjects/:subjectName" element={<ChaptersPage />} />
-<Route path="/subjects/:subjectName/chapters/:chapterName" element={<TopicsPage />} />
-<Route path="/subjects/:subjectName/:chapterName/topics/:topicName" element={<QuestionListPage />} />
+<Route path="/subjects/:subjectId/:subjectName" element={<ChaptersPage />} />
+<Route path="/chapters/:chapterId/:chapterName" element={<TopicsPage />} />
+<Route path="/topics/:topicId/:topicName" element={<QuestionListPage />} />
 <Route
   path="/subjects/:subjectName/:chapterName/topics/:topicName/attempt"
   element={<AttemptQuestionPage />}

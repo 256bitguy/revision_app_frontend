@@ -1,23 +1,40 @@
 import { useState } from 'react';
 import './AddChapterModal.css';
+import { addChapter } from '../slice/chapterAPI';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { useParams } from 'react-router-dom';
 
 interface AddChapterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (chapter: { name: string; ranking: number }) => void;
+  onSubmit?: (chapter: { name: string; ranking: number }) => void;
+}
+interface ChapterInput {
+  name: string;
+  ranking: number;
+  subject: string;
 }
 
-const AddChapterModal = ({ isOpen, onClose, onSubmit }: AddChapterModalProps) => {
+const AddChapterModal = ({ isOpen, onClose }: AddChapterModalProps) => {
   const [name, setName] = useState('');
-  const [ranking, setRanking] = useState('');
+  const [ranking, setRanking] = useState<number>();
+  const dispatch = useAppDispatch();
 
+const {subjectId} = useParams(); 
+console.log(subjectId)
+ 
+  
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !ranking) return alert('Please fill both fields');
-    onSubmit({ name, ranking: Number(ranking) });
+       const chapter :ChapterInput = {
+         name : name,
+         ranking : ranking,
+         subject :String(subjectId)   
+       };
+       await dispatch(addChapter(chapter));
     setName('');
-    setRanking('');
     onClose();
   };
 
@@ -35,7 +52,7 @@ const AddChapterModal = ({ isOpen, onClose, onSubmit }: AddChapterModalProps) =>
           type="number"
           placeholder="Ranking"
           value={ranking}
-          onChange={(e) => setRanking(e.target.value)}
+          onChange={(e) => setRanking(Number(e.target.value))}
         />
         <div className="modal-buttons">
           <button className="submit-btn" onClick={handleSubmit}>Submit</button>

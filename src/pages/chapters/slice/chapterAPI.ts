@@ -6,8 +6,10 @@ export const fetchChaptersBySubjectId = createAsyncThunk(
   'chapters/fetchBySubject',
   async (subjectId: string, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/chapters?subjectId=${subjectId}`);
-      return response.data; // should be an array of chapters
+      const response = await axiosInstance.get(`/chapters/${subjectId}`);
+      console.log(response,"gdrvdf");
+      return response.data.allChapters; // should be an array of chapters
+
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch chapters');
     }
@@ -16,22 +18,23 @@ export const fetchChaptersBySubjectId = createAsyncThunk(
 
 // Add a new chapter
 export const addChapter = createAsyncThunk(
-  'chapters/addChapter',
+  'chapters/publish',
   async (
     {
-      subjectId,
+      subject,
       name,
       ranking,
-    }: { subjectId: string; name: string; ranking: number },
+    }: { subject: string; name: string; ranking: number },
     { rejectWithValue }
   ) => {
     try {
-      const response = await axiosInstance.post(`/chapters`, {
-        subjectId,
+      const response = await axiosInstance.post(`/chapters/publish`, {
+        subject,
         name,
         ranking,
       });
-      return response.data; // the newly created chapter
+      
+      return response.data; 
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to add chapter');
     }
