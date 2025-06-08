@@ -6,6 +6,7 @@ interface Topic {
   name: string;
   ranking: number;
   chapterId: string;
+  createdAt:string
 }
 
 interface TopicState {

@@ -67,3 +67,55 @@
 .add-topic-button:hover {
   background-color: #4a148c; /* Darker purple */
 }
+.topic-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.topic-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  background-color: #f9f9f9;
+}
+
+.topic-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #00796b; /* Teal */
+}
+
+.topic-card p {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .topic-card-container {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .topic-card h3 {
+    font-size: 1rem;
+  }
+
+  .topic-card p {
+    font-size: 0.9rem;
+  }
+}

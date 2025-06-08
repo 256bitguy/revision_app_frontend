@@ -39,6 +39,9 @@ const TopicsPage = () => {
             >
               <h3>{t.name}</h3>
               <p>Ranking: {t.ranking}</p>
+              <div className="chapter-date">
+          Started on: {new Date(t.createdAt).toLocaleDateString()}
+        </div>
             </Link>
           ))}
         </div>

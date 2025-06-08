@@ -55,7 +55,6 @@ const LandingPage = () => {
         <h1 className="welcome-heading">Welcome to Our App</h1>
         <div className="landing-links">
           <Link to="/login" className="landing-button">Login</Link>
-          <Link to="/users" className="landing-button">See Others</Link>
         </div>
       </div>
     </div>

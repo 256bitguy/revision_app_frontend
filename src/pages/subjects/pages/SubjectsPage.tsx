@@ -27,19 +27,25 @@ const SubjectsPage = () => {
       ) : subjects.length === 0 ? (
         <p className="subjects-empty">No subjects added yet.</p>
       ) : (
-        <ul className="subjects-list fade-in">
-          {subjects.map((subj) => (
-            <li key={subj._id} className="subject-item">
-              <Link
-                to={`/subjects/${encodeURIComponent(subj._id)}/${subj.name}`}
-                style={{ textDecoration: 'none', color: 'teal', fontWeight: '500' }}
-              >
-                <strong>{subj.name}</strong>
-                <span className="subject-rank">Rank: {subj.rank}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+       <ul className="subjects-list fade-in">
+  {subjects.map((subj) => (
+    <li key={subj._id} className="subject-item">
+      <Link
+        to={`/subjects/${encodeURIComponent(subj._id)}/${subj.name}`}
+        className="subject-link"
+      >
+        <div className="subject-content">
+          <strong className="subject-name">{subj.name}</strong>
+          <span className="subject-rank">Rank: {subj.rank}</span>
+        </div>
+         <div className="chapter-date">
+          Started on: {new Date(subj.createdAt).toLocaleDateString()}
+        </div>
+      </Link>
+    </li>
+  ))}
+</ul>
+
       )}
 
       <button className="add-subject-button" onClick={() => setModalOpen(true)}>

@@ -6,6 +6,7 @@ interface Chapter {
   name: string;
   ranking: number;
   subjectId: string;
+  createdAt:string
 }
 
 interface ChapterState {

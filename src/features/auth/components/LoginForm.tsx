@@ -3,14 +3,18 @@ import './LoginForm.css';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { loginUser } from '../slices/authAPI';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
  
 
 interface LoginFormData {
   username: string;
   password: string;
 }
-
+interface Value {
+  type: string,
+  payload :any,
+  meta:any
+}
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,11 +32,12 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const value = await dispatch(loginUser(formData));
-    console.log(value, 'value');
+    const value:Value = await dispatch(loginUser(formData));
+    const username =value.payload.data.user.username
+   
     if (value) {
      
-    navigate('/profile');
+    navigate(`/profile/${username}`);
     }
   };
 
@@ -87,6 +92,11 @@ const LoginForm: React.FC = () => {
         >
           Don't have an account? Register
         </button>
+
+      </div>
+      <div className='others'>
+
+              <Link to="/users" className="landing-button">See Others</Link>
       </div>
     </>
   );

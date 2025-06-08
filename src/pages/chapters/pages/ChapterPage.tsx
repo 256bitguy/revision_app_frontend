@@ -30,23 +30,23 @@ const ChaptersPage = () => {
       ) : chapters.length === 0 ? (
         <p className="no-chapters">No chapters added yet.</p>
       ) : (
-        <ul className="chapter-list fade-in">
-          {chapters.map((chap) => (
-            <li key={chap._id} className="chapter-item">
-              <Link
-                to={`/chapters/${chap._id}/${chap.name}`}
-                style={{
-                  textDecoration: "none",
-                  color: "teal",
-                  fontWeight: "500",
-                }}
-              >
-                <strong>{chap.name}</strong>{" "}
-                <span className="rank">(Rank {chap.ranking})</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+<ul className="chapter-list fade-in">
+  {chapters.map((chap) => (
+    <li key={chap._id} className="chapter-item">
+      <Link to={`/chapters/${chap._id}/${chap.name}`} className="chapter-link">
+        <div className="chapter-content">
+          <strong className="chapter-name">{chap.name}</strong>
+          <span className="chapter-rank">Rank: {chap.ranking}</span>
+        </div>
+        <div className="chapter-date">
+          Started on: {new Date(chap.createdAt).toLocaleDateString()}
+        </div>
+      </Link>
+    </li>
+  ))}
+</ul>
+
+
       )}
 
       <button className="add-btn" onClick={() => setModalOpen(true)}>
