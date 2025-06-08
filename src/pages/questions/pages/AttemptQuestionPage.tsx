@@ -3,10 +3,7 @@ import { useParams } from 'react-router-dom';
 import './AttemptQuestionsPage.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { fetchQuestionsByTopic } from '../slices/questionAPI';
- interface Questions {
-  total:number,
-  questions:[]
- }
+  
 const AttemptQuestionPage = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const dispatch = useAppDispatch();
