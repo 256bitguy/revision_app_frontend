@@ -1,68 +1,79 @@
-/* Mobile-first base styles */
-.landing-container {
-  min-height: 100vh;
+/* Center container vertically and horizontally */
+.landing-container, .greeting-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa, #d0e2ff);
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #f0f8ff, #e6f7ff);
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-.landing-box {
-  width: 100%;
-  max-width: 420px;
+/* Card style */
+.landing-box, .greeting-card {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  background-color: #ffffff;
-  padding: 40px 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
+  max-width: 450px;
+  width: 100%;
+  animation: fadeIn 1s ease-in-out;
 }
 
-.landing-box h1 {
-  font-size: 1.8rem;
-  margin-bottom: 24px;
+/* Greeting card styles */
+.greeting-card h2 {
+  font-size: 1.75rem;
+  color: #1e88e5;
+  margin-bottom: 1rem;
+}
+
+.greeting-card .username {
+  color: #43a047;
+}
+
+.greeting-card .thought {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #444;
+}
+
+/* App branding */
+.app-name {
+  font-size: 1.2rem;
+  color: #2196f3;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
   color: #333;
 }
 
+/* Button layout */
 .landing-links {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .landing-button {
-  background-color: #6c63ff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  background-color: #2196f3;
   color: white;
   text-decoration: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
+  font-weight: bold;
   transition: background-color 0.3s ease;
 }
 
 .landing-button:hover {
-  background-color: #5548c8;
+  background-color: #1976d2;
 }
 
-/* Tablet-specific adjustments */
-@media (min-width: 600px) and (max-width: 768px) {
-  .landing-box {
-    padding: 50px 30px;
-  }
-
-  .landing-box h1 {
-    font-size: 2.2rem;
-  }
-
-  .landing-links {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .landing-button {
-    padding: 12px 24px;
-    font-size: 1.1rem;
-  }
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
