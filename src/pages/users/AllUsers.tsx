@@ -38,7 +38,7 @@ const AllUsers: React.FC = () => {
           <div className="user-info">
             <h3>{user.fullName}</h3>
             <p>@{user.username}</p>
-            <p className="created-at">Joined on {new Date(user.createdAt).toLocaleDateString()}</p>
+            <p className="created-at">Joined on the date {new Date(user.createdAt).toLocaleDateString()}</p>
           </div>
         </div>
       ))}
