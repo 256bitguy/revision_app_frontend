@@ -24,7 +24,7 @@ const AppRouter = () => (
 <Route path="/chapters/:chapterId/:chapterName" element={<TopicsPage />} />
 <Route path="/topics/:topicId/:topicName" element={<QuestionListPage />} />
 <Route
-  path="/subjects/:subjectName/:chapterName/topics/:topicName/attempt"
+  path="/topics/:topicId/attempt"
   element={<AttemptQuestionPage />}
 />
 

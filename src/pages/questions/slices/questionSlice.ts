@@ -43,7 +43,7 @@ const questionSlice = createSlice({
       })
       .addCase(fetchQuestionsByTopic.fulfilled, (state, action) => {
         state.loading = false;
-        state.questions = action.payload;
+        state.questions = action.payload.questions;
       })
       .addCase(fetchQuestionsByTopic.rejected, (state, action) => {
         state.loading = false;

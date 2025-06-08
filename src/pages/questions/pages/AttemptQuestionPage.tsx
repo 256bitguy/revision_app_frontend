@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './AttemptQuestionsPage.css';
-
-interface Question {
-  ranking: number;
-  topicId: string;
-  statements: { order: string; statement: string }[];
-  options: { order: string; statement: string }[];
-  question: string;
-  correctOption: number[];
-  answer: string;
-  type: string;
-}
-
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { fetchQuestionsByTopic } from '../slices/questionAPI';
+ interface Questions {
+  total:number,
+  questions:[]
+ }
 const AttemptQuestionPage = () => {
-  const { subjectName, chapterName, topicName } = useParams();
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const { topicId } = useParams<{ topicId: string }>();
+  const dispatch = useAppDispatch();
+  const questions = useAppSelector((state) => state.questions.questions);
+  const loading = useAppSelector((state) => state.questions.loading);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-
+console.log(questions,"asdlfhld")
   useEffect(() => {
-    const key = `questions_${subjectName}_${chapterName}_${topicName}`;
-    const data = JSON.parse(localStorage.getItem(key) || '[]');
-    setQuestions(data);
-  }, [subjectName, chapterName, topicName]);
-
-  if (questions.length === 0) return <div className="loading">Loading questions...</div>;
+    if (topicId) {
+      dispatch(fetchQuestionsByTopic(topicId));
+    }
+  }, [dispatch, topicId]);
 
   const current = questions[currentIndex];
+  const isCorrect = selectedOption !== null && current?.correctOption?.includes(selectedOption);
 
   const handleNext = () => {
     setShowAnswer(false);
@@ -42,18 +38,18 @@ const AttemptQuestionPage = () => {
     if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
   };
 
-  const isCorrect = selectedOption !== null && current.correctOption.includes(selectedOption);
+  if (loading || questions.length === 0) return <div className="loading">Loading questions...</div>;
 
   return (
     <div className="attempt-page">
-      <div className="question-box">
+       <div className="question-box">
         <div className="question-count">
           Question {currentIndex + 1} / {questions.length}
         </div>
 
-        {current.statements?.length > 0 && (
+        {current?.statements?.length > 0 && (
           <div className="statement-section">
-            {current.statements.map((s, i) => (
+            {current.statements?.map((s, i) => (
               <p key={i}>
                 <strong>{s.order}.</strong> {s.statement}
               </p>
@@ -61,27 +57,31 @@ const AttemptQuestionPage = () => {
           </div>
         )}
 
-        <div className="question-text">
-          <strong>Q:</strong> {current.question}
-        </div>
+        {current?.question && (
+          <div className="question-text">
+            <strong>Q:</strong> {current.question}
+          </div>
+        )}
 
-        <div className="option-list">
-          {current.options.map((opt, idx) => (
-            <button
-              key={idx}
-              onClick={() => setSelectedOption(idx)}
-              className={`option-button ${
-                selectedOption === idx
-                  ? isCorrect
-                    ? 'correct'
-                    : 'incorrect'
-                  : ''
-              }`}
-            >
-              <strong>{opt.order}.</strong> {opt.statement}
-            </button>
-          ))}
-        </div>
+        {current?.options?.length > 0 && (
+          <div className="option-list">
+            {current.options.map((opt, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSelectedOption(idx)}
+                className={`option-button ${
+                  selectedOption === idx
+                    ? isCorrect
+                      ? 'correct'
+                      : 'incorrect'
+                    : ''
+                }`}
+              >
+                <strong>{opt.order}.</strong> {opt.statement}
+              </button>
+            ))}
+          </div>
+        )}
 
         <button className="toggle-answer" onClick={() => setShowAnswer((prev) => !prev)}>
           {showAnswer ? 'Hide Answer' : 'Show Answer'}
@@ -89,10 +89,18 @@ const AttemptQuestionPage = () => {
 
         {showAnswer && (
           <div className="answer-box">
-            <strong>Correct Option(s):</strong>{' '}
-            {current.correctOption.map((i) => current.options[i]?.order).join(', ')}
-            <br />
-            <strong>Explanation:</strong> {current.answer}
+            {current?.correctOption?.length > 0 && (
+              <>
+                <strong>Correct Option(s):</strong>{' '}
+                {current.correctOption.map((i) => current.options[i]?.order).join(', ')}
+                <br />
+              </>
+            )}
+            {current?.answer && (
+              <>
+                <strong>Explanation:</strong> {current.answer}
+              </>
+            )}
           </div>
         )}
 
@@ -104,7 +112,7 @@ const AttemptQuestionPage = () => {
             Next ➡️
           </button>
         </div>
-      </div>
+       </div> 
     </div>
   );
 };

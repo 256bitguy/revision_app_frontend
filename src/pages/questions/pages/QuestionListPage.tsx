@@ -2,26 +2,26 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import AddQuestionModal from "../components/AddQuestionModal";
 import "./QuestionListPage.css";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { fetchQuestionsByTopic } from "../slices/questionAPI";
 
 const QuestionListPage = () => {
-  const { subjectName, chapterName, topicName } = useParams();
-  const storageKey = `questions_${subjectName}_${chapterName}_${topicName}`;
-
-  const [questions, setQuestions] = useState<any[]>([]);
+  const { topicName,topicId } = useParams();
+  const dispatch = useAppDispatch(); 
+  // const [questions, setQuestions] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<"notes" | "practice">("practice");
   const [modalOpen, setModalOpen] = useState(false);
-
+  const questions = useAppSelector((state)=>state.questions.questions);
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
-    setQuestions(saved);
-  }, [modalOpen, storageKey]);
+const callFun = async()=>{
+      if(topicId){
+       await dispatch(fetchQuestionsByTopic(topicId));
+     }
+}
+callFun();
+   }, [modalOpen, topicId]);
 
-  const handleAdd = (data: any) => {
-    const updated = [...questions, data];
-    localStorage.setItem(storageKey, JSON.stringify(updated));
-    setQuestions(updated);
-  };
-
+ 
   return (
     <div className="question-page">
       <h2>Questions for "{topicName}"</h2>
@@ -34,7 +34,7 @@ const QuestionListPage = () => {
           Notes / Story
         </button>
         <Link
-          to={`/subjects/${subjectName}/${chapterName}/topics/${topicName}/attempt`}
+          to={`/topics/${topicId}/attempt`}
         >
           <button
             className={activeTab === "practice" ? "active" : ""}
@@ -67,8 +67,7 @@ const QuestionListPage = () => {
       <AddQuestionModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={handleAdd}
-      />
+       />
     </div>
   );
 };

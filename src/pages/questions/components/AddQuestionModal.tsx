@@ -1,44 +1,48 @@
 import { useState } from 'react';
 import './AddQuestionModal.css';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { addQuestion } from '../slices/questionAPI';
 
 interface AddQuestionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: any) => void;
+  onSubmit?: (data: any) => void;
 }
 
-const AddQuestionModal = ({ isOpen, onClose, onSubmit }: AddQuestionModalProps) => {
-  const [ranking, setRanking] = useState('');
+const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
+  const {topicId} = useParams()
+  const [ranking, setRanking] = useState<number>(0)
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
-  const [type, setType] = useState('single');
+  const [type, setType] = useState<'single' | 'multiple' | 'assertion-reason' | 'statement-based'>('single');
   const [statements, setStatements] = useState([{ order: '1', statement: '' }]);
   const [options, setOptions] = useState([{ order: '1', statement: '' }]);
-  const [correctOption, setCorrectOption] = useState('');
-
+  const [correctOption, setCorrectOption] = useState(0);
+const dispatch = useAppDispatch();
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
-    const correct = correctOption.split(',').map((x) => parseInt(x.trim()));
-    onSubmit({
-      ranking: parseInt(ranking),
-      question,
-      answer,
-      type,
-      statements,
-      options,
-      correctOption: correct,
-    });
+  const handleSubmit = async () => {
+  const questionF={
+    ranking:ranking,
+    question:question,
+    topicId:topicId as string,
+    statements:statements,
+    options:options,
+    correctOption:correctOption,
+    answer:answer,
+    type:type
+  }
+     await dispatch(addQuestion(questionF))
     onClose();
-    // Reset
-    setRanking('');
+    
+  
     setQuestion('');
     setAnswer('');
     setType('single');
     setStatements([{ order: '1', statement: '' }]);
     setOptions([{ order: '1', statement: '' }]);
-    setCorrectOption('');
-  };
+   };
 
   const updateList = (list: any[], setList: any, i: number, value: string, key: string) => {
     const newList = [...list];
@@ -52,9 +56,10 @@ const AddQuestionModal = ({ isOpen, onClose, onSubmit }: AddQuestionModalProps) 
         <h2>Add Question</h2>
 
         <input
+        type='number'
           placeholder="Ranking"
           value={ranking}
-          onChange={(e) => setRanking(e.target.value)}
+          onChange={(e) => setRanking(Number(e.target.value))}
         />
 
         <textarea
@@ -69,7 +74,7 @@ const AddQuestionModal = ({ isOpen, onClose, onSubmit }: AddQuestionModalProps) 
           onChange={(e) => setAnswer(e.target.value)}
         />
 
-        <select value={type} onChange={(e) => setType(e.target.value)}>
+        <select value={type} onChange={(e) => setType(e.target.value as 'single' | 'multiple' | 'assertion-reason' | 'statement-based')}>
           <option value="single">Single</option>
           <option value="multiple">Multiple</option>
           <option value="assertion-reason">Assertion-Reason</option>
@@ -117,7 +122,7 @@ const AddQuestionModal = ({ isOpen, onClose, onSubmit }: AddQuestionModalProps) 
         <input
           placeholder="Correct Option(s) comma-separated (e.g., 1,2)"
           value={correctOption}
-          onChange={(e) => setCorrectOption(e.target.value)}
+          onChange={(e) => setCorrectOption(Number(e.target.value))}
         />
 
         <button onClick={handleSubmit}>Save</button>
