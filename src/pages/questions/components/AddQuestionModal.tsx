@@ -29,7 +29,7 @@ const dispatch = useAppDispatch();
     topicId:topicId as string,
     statements:statements,
     options:options,
-    correctOption:correctOption+1,
+    correctOption:correctOption-1,
     answer:answer,
     type:type
   }
