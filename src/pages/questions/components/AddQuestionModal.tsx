@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import './AddQuestionModal.css';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { addQuestion } from '../slices/questionAPI';
+import { useState } from "react";
+import "./AddQuestionModal.css";
+import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { addQuestion } from "../slices/questionAPI";
 
 interface AddQuestionModalProps {
   isOpen: boolean;
@@ -11,40 +11,68 @@ interface AddQuestionModalProps {
 }
 
 const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
-  const {topicId} = useParams()
-  const [ranking, setRanking] = useState<number>(0)
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [type, setType] = useState<'single' | 'multiple' | 'assertion-reason' | 'statement-based'>('single');
-  const [statements, setStatements] = useState([{ order: '1', statement: '' }]);
-  const [options, setOptions] = useState([{ order: '1', statement: '' }]);
+  const { topicId } = useParams();
+  const [ranking, setRanking] = useState<number>(0);
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [type, setType] = useState<
+    "single" | "multiple" | "assertion-reason" | "statement-based"
+  >("single");
+  const [statements, setStatements] = useState([{ order: "1", statement: "" }]);
+  const [options, setOptions] = useState([{ order: "1", statement: "" }]);
   const [correctOption, setCorrectOption] = useState(0);
-const dispatch = useAppDispatch();
+  const [currentOrder, setCurrentOrder] = useState(2);
+  const [currentOptionOrder, setCurrentOptionOrder] = useState(2);
+  const addOption = () => {
+    setOptions((prev) => [
+      ...prev,
+      { order: String(currentOptionOrder), statement: "" },
+    ]);
+    setCurrentOptionOrder((prev) => prev + 1);
+  };
+
+  const addStatement = () => {
+    setStatements((prev) => [
+      ...prev,
+      { order: String(currentOrder), statement: "" },
+    ]);
+    setCurrentOrder((prev) => prev + 1);
+  };
+  const dispatch = useAppDispatch();
   if (!isOpen) return null;
+  const getFilteredStatements = () => {
+    return statements.filter((item) => item.statement.trim() !== "");
+  };
+  const statement = getFilteredStatements();
 
   const handleSubmit = async () => {
-  const questionF={
-    ranking:ranking,
-    question:question,
-    topicId:topicId as string,
-    statements:statements,
-    options:options,
-    correctOption:correctOption-1,
-    answer:answer,
-    type:type
-  }
-     await dispatch(addQuestion(questionF))
+    const questionF = {
+      ranking: ranking,
+      question: question,
+      topicId: topicId as string,
+      statements: statement,
+      options: options,
+      correctOption: correctOption-1,
+      answer: answer,
+      type: type,
+    };
+    await dispatch(addQuestion(questionF));
     onClose();
-    
-  
-    setQuestion('');
-    setAnswer('');
-    setType('single');
-    setStatements([{ order: '1', statement: '' }]);
-    setOptions([{ order: '1', statement: '' }]);
-   };
 
-  const updateList = (list: any[], setList: any, i: number, value: string, key: string) => {
+    setQuestion("");
+    setAnswer("");
+    setType("single");
+    setStatements([{ order: "1", statement: "" }]);
+    setOptions([{ order: "1", statement: "" }]);
+  };
+
+  const updateList = (
+    list: any[],
+    setList: any,
+    i: number,
+    value: string,
+    key: string
+  ) => {
     const newList = [...list];
     newList[i][key] = value;
     setList(newList);
@@ -56,7 +84,7 @@ const dispatch = useAppDispatch();
         <h2>Add Question</h2>
 
         <input
-        type='number'
+          type="number"
           placeholder="Ranking"
           value={ranking}
           onChange={(e) => setRanking(Number(e.target.value))}
@@ -74,7 +102,18 @@ const dispatch = useAppDispatch();
           onChange={(e) => setAnswer(e.target.value)}
         />
 
-        <select value={type} onChange={(e) => setType(e.target.value as 'single' | 'multiple' | 'assertion-reason' | 'statement-based')}>
+        <select
+          value={type}
+          onChange={(e) =>
+            setType(
+              e.target.value as
+                | "single"
+                | "multiple"
+                | "assertion-reason"
+                | "statement-based"
+            )
+          }
+        >
           <option value="single">Single</option>
           <option value="multiple">Multiple</option>
           <option value="assertion-reason">Assertion-Reason</option>
@@ -87,18 +126,32 @@ const dispatch = useAppDispatch();
             <input
               placeholder="Order"
               value={s.order}
-              onChange={(e) => updateList(statements, setStatements, i, e.target.value, 'order')}
+              onChange={(e) =>
+                updateList(
+                  statements,
+                  setStatements,
+                  i,
+                  e.target.value,
+                  "order"
+                )
+              }
             />
             <input
               placeholder="Statement"
               value={s.statement}
-              onChange={(e) => updateList(statements, setStatements, i, e.target.value, 'statement')}
+              onChange={(e) =>
+                updateList(
+                  statements,
+                  setStatements,
+                  i,
+                  e.target.value,
+                  "statement"
+                )
+              }
             />
           </div>
         ))}
-        <button onClick={() => setStatements([...statements, { order: '', statement: '' }])}>
-          + Add Statement
-        </button>
+        <button onClick={addStatement}>+ Add Statement</button>
 
         <h4>Options</h4>
         {options.map((o, i) => (
@@ -106,18 +159,20 @@ const dispatch = useAppDispatch();
             <input
               placeholder="Order"
               value={o.order}
-              onChange={(e) => updateList(options, setOptions, i, e.target.value, 'order')}
+              onChange={(e) =>
+                updateList(options, setOptions, i, e.target.value, "order")
+              }
             />
             <input
               placeholder="Statement"
               value={o.statement}
-              onChange={(e) => updateList(options, setOptions, i, e.target.value, 'statement')}
+              onChange={(e) =>
+                updateList(options, setOptions, i, e.target.value, "statement")
+              }
             />
           </div>
         ))}
-        <button onClick={() => setOptions([...options, { order: '', statement: '' }])}>
-          + Add Option
-        </button>
+        <button onClick={addOption}>+ Add Option</button>
 
         <input
           placeholder="Correct Option(s) comma-separated (e.g., 1,2)"

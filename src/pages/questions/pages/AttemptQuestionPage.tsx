@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import './AttemptQuestionsPage.css';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { fetchQuestionsByTopic } from '../slices/questionAPI';
-  
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "./AttemptQuestionsPage.css";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { fetchQuestionsByTopic } from "../slices/questionAPI";
+
 const AttemptQuestionPage = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const dispatch = useAppDispatch();
@@ -13,7 +13,6 @@ const AttemptQuestionPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-console.log(questions,"asdlfhld")
   useEffect(() => {
     if (topicId) {
       dispatch(fetchQuestionsByTopic(topicId));
@@ -21,12 +20,14 @@ console.log(questions,"asdlfhld")
   }, [dispatch, topicId]);
 
   const current = questions[currentIndex];
-  const isCorrect = selectedOption !== null && current?.correctOption?.includes(selectedOption);
+  const isCorrect =
+    selectedOption !== null && current?.correctOption?.includes(selectedOption);
 
   const handleNext = () => {
     setShowAnswer(false);
     setSelectedOption(null);
-    if (currentIndex < questions.length - 1) setCurrentIndex((prev) => prev + 1);
+    if (currentIndex < questions.length - 1)
+      setCurrentIndex((prev) => prev + 1);
   };
 
   const handlePrevious = () => {
@@ -35,11 +36,18 @@ console.log(questions,"asdlfhld")
     if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
   };
 
-  if (loading || questions.length === 0) return <div className="loading">Loading questions...</div>;
+ if (loading) {
+  return <div className="loading">Loading questions...</div>;
+}
+
+if (!loading && questions.length === 0) {
+  return <div className="loading">No questions available</div>;
+}
+
 
   return (
     <div className="attempt-page">
-       <div className="question-box">
+      <div className="question-box">
         <div className="question-count">
           Question {currentIndex + 1} / {questions.length}
         </div>
@@ -69,9 +77,9 @@ console.log(questions,"asdlfhld")
                 className={`option-button ${
                   selectedOption === idx
                     ? isCorrect
-                      ? 'correct'
-                      : 'incorrect'
-                    : ''
+                      ? "correct"
+                      : "incorrect"
+                    : ""
                 }`}
               >
                 <strong>{opt.order}.</strong> {opt.statement}
@@ -80,16 +88,21 @@ console.log(questions,"asdlfhld")
           </div>
         )}
 
-        <button className="toggle-answer" onClick={() => setShowAnswer((prev) => !prev)}>
-          {showAnswer ? 'Hide Answer' : 'Show Answer'}
+        <button
+          className="toggle-answer"
+          onClick={() => setShowAnswer((prev) => !prev)}
+        >
+          {showAnswer ? "Hide Answer" : "Show Answer"}
         </button>
 
         {showAnswer && (
           <div className="answer-box">
             {current?.correctOption?.length > 0 && (
               <>
-                <strong>Correct Option(s):</strong>{' '}
-                {current.correctOption.map((i) => current.options[i]?.order).join(', ')}
+                <strong>Correct Option(s):</strong>{" "}
+                {current.correctOption
+                  .map((i) => current.options[i]?.order)
+                  .join(", ")}
                 <br />
               </>
             )}
@@ -105,11 +118,14 @@ console.log(questions,"asdlfhld")
           <button onClick={handlePrevious} disabled={currentIndex === 0}>
             ⬅️ Previous
           </button>
-          <button onClick={handleNext} disabled={currentIndex === questions.length - 1}>
+          <button
+            onClick={handleNext}
+            disabled={currentIndex === questions.length - 1}
+          >
             Next ➡️
           </button>
         </div>
-       </div> 
+      </div>
     </div>
   );
 };
