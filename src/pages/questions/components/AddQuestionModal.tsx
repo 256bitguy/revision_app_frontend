@@ -45,7 +45,7 @@ const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
   };
   const statement = getFilteredStatements();
 
-  const handleSubmit = async () => {
+  const handleSubmit =   () => {
     const questionF = {
       ranking: ranking,
       question: question,
@@ -56,14 +56,17 @@ const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
       answer: answer,
       type: type,
     };
-    await dispatch(addQuestion(questionF));
+      dispatch(addQuestion(questionF));
     onClose();
 
     setQuestion("");
     setAnswer("");
     setType("single");
+    setCurrentOrder(2);
+    setCurrentOptionOrder(2);
     setStatements([{ order: "1", statement: "" }]);
     setOptions([{ order: "1", statement: "" }]);
+    setCorrectOption(0)
   };
 
   const updateList = (
