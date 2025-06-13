@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./AddQuestionModal.css";
 import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { addQuestion } from "../slices/questionAPI";
 
 interface AddQuestionModalProps {
@@ -12,8 +12,7 @@ interface AddQuestionModalProps {
 
 const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
   const { topicId } = useParams();
-  const [ranking, setRanking] = useState<number>(0);
-  const [question, setQuestion] = useState("");
+   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [type, setType] = useState<
     "single" | "multiple" | "assertion-reason" | "statement-based"
@@ -23,6 +22,7 @@ const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
   const [correctOption, setCorrectOption] = useState(0);
   const [currentOrder, setCurrentOrder] = useState(2);
   const [currentOptionOrder, setCurrentOptionOrder] = useState(2);
+  const rankingNumber = useAppSelector((state)=> state.questions.questions).length
   const addOption = () => {
     setOptions((prev) => [
       ...prev,
@@ -47,7 +47,7 @@ const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
 
   const handleSubmit =   () => {
     const questionF = {
-      ranking: ranking,
+      ranking: rankingNumber,
       question: question,
       topicId: topicId as string,
       statements: statement,
@@ -86,12 +86,7 @@ const AddQuestionModal = ({ isOpen, onClose }: AddQuestionModalProps) => {
       <div className="modal-box">
         <h2>Add Question</h2>
 
-        <input
-          type="number"
-          placeholder="Ranking"
-          value={ranking}
-          onChange={(e) => setRanking(Number(e.target.value))}
-        />
+        
 
         <textarea
           placeholder="Question"
