@@ -8,6 +8,7 @@ import subjectReducer from "../pages/subjects/slices/subjectSlice";
 import chapterReducer from "../pages/chapters/slice/chaptersSlice";
 import topicReducer from "../pages/topics/slice/topicSlice";
 import questionReducer from "../pages/questions/slices/questionSlice";
+import vocabReducer from "../pages/vocabulary/slices/vocabSlice";
 
 // Configure persist per reducer if needed
 const authPersistConfig = {
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   chapters: chapterReducer,
   topics: topicReducer,
   questions: questionReducer,
+  vocabulary:vocabReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

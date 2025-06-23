@@ -36,14 +36,13 @@ const AttemptQuestionPage = () => {
     if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
   };
 
- if (loading) {
-  return <div className="loading">Loading questions...</div>;
-}
+  if (loading) {
+    return <div className="loading">Loading questions...</div>;
+  }
 
-if (!loading && questions.length === 0) {
-  return <div className="loading">No questions available</div>;
-}
-
+  if (!loading && questions.length === 0) {
+    return <div className="loading">No questions available</div>;
+  }
 
   return (
     <div className="attempt-page">

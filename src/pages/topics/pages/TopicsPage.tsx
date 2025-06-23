@@ -4,9 +4,9 @@ import AddTopicModal from '../components/AddTopicModal';
 import './TopicsPage.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { fetchTopicsByChapter } from '../slice/topicAPI';
- 
+
 const TopicsPage = () => {
-  const { chapterName, chapterId } = useParams<{ chapterId:string,chapterName: string }>();
+  const { chapterName, chapterId } = useParams<{ chapterId: string; chapterName: string }>();
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -21,9 +21,7 @@ const TopicsPage = () => {
 
   return (
     <div className="topics-page">
-      <h2 className="heading">
-       {chapterName}
-      </h2>
+      <h2 className="heading">{chapterName}</h2>
 
       {loading ? (
         <div className="loader">Loading topics...</div>
@@ -32,17 +30,23 @@ const TopicsPage = () => {
       ) : (
         <div className="topic-card-container fade-in">
           {topics.map((t) => (
-            <Link
-              key={t._id}
-              to={`/topics/${encodeURIComponent(t._id)}/${t.name}`}
-              className="topic-card"
-            >
+            <div key={t._id} className="topic-card">
               <h3>{t.name}</h3>
               <p>Ranking: {t.ranking}</p>
               <div className="chapter-date">
-          Started on: {new Date(t.createdAt).toLocaleDateString()}
-        </div>
-            </Link>
+                Started on: {new Date(t.createdAt).toLocaleDateString()}
+              </div>
+
+              <div className="topic-actions">
+                <Link to={`/topics/${t._id}/${t.name}`}>
+                  <button className="topic-btn">📝 Create Questions</button>
+                </Link>
+
+                <Link to={`/topics/${t._id}/vocabulary/${t.name}`}>
+                  <button className="topic-btn secondary">📖 Create Vocabulary</button>
+                </Link>
+              </div>
+            </div>
           ))}
         </div>
       )}

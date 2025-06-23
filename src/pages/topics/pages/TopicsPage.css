@@ -10,49 +10,91 @@
   font-size: 1.8rem;
   color: #333;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
+/* Topic Cards Grid */
 .topic-card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 16px;
 }
 
+/* Individual Card */
 .topic-card {
   background-color: white;
-  border-left: 5px solid #006699; /* Accent color */
+  border-left: 5px solid #006699;
   border-radius: 12px;
   padding: 1rem;
-  width: 220px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   text-decoration: none;
   color: #222;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition: all 0.2s ease-in-out;
-}
-
-.topic-card h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.topic-card p {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #666;
 }
 
 .topic-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   border-left-color: teal;
+  background-color: #f9f9f9;
 }
 
+.topic-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  color: #00796b;
+}
+
+.topic-card p,
+.chapter-date {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0.2rem 0;
+}
+
+/* Action Buttons inside topic card */
+.topic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.topic-btn {
+  flex: 1;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  background-color: #007acc;
+  color: #fff;
+  text-align: center;
+}
+
+.topic-btn:hover {
+  background-color: #005fa3;
+}
+
+.topic-btn.secondary {
+  background-color: #6a1b9a;
+}
+
+.topic-btn.secondary:hover {
+  background-color: #4a148c;
+}
+
+/* Add Button (FAB) */
 .add-topic-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #6a1b9a; /* Deep Purple */
+  background-color: #6a1b9a;
   color: white;
   padding: 12px 24px;
   border-radius: 30px;
@@ -65,57 +107,49 @@
 }
 
 .add-topic-button:hover {
-  background-color: #4a148c; /* Darker purple */
-}
-.topic-card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  padding: 16px;
+  background-color: #4a148c;
 }
 
-.topic-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.topic-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  background-color: #f9f9f9;
-}
-
-.topic-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 8px;
-  color: #00796b; /* Teal */
-}
-
-.topic-card p {
-  font-size: 0.95rem;
+/* Loading / No topics */
+.loader,
+.no-topics {
+  text-align: center;
+  font-size: 1rem;
   color: #666;
+  margin-top: 2rem;
 }
 
-/* Responsive tweaks */
+/* ✅ Responsive Styles */
 @media (max-width: 768px) {
+  .topics-page {
+    padding: 1rem;
+  }
+
   .topic-card-container {
-    grid-template-columns: 1fr;
-    padding: 12px;
+    padding: 0;
+    gap: 12px;
+  }
+
+  .topic-card {
+    padding: 1rem;
   }
 
   .topic-card h3 {
     font-size: 1rem;
   }
 
-  .topic-card p {
+  .topic-card p,
+  .chapter-date {
+    font-size: 0.88rem;
+  }
+
+  .topic-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
+
+  .add-topic-button {
+    padding: 10px 20px;
     font-size: 0.9rem;
   }
 }
