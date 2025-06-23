@@ -45,6 +45,12 @@ const TopicsPage = () => {
                 <Link to={`/topics/${t._id}/vocabulary/${t.name}`}>
                   <button className="topic-btn secondary">📖 Create Vocabulary</button>
                 </Link>
+                 <Link to={`/test-note/${t._id}`}>
+                  <button className="topic-btn secondary">📖 Create Notes</button>
+                </Link>
+                 <Link to={`/notes/${t._id}`}>
+                  <button className="topic-btn secondary">📖 See Notes</button>
+                </Link>
               </div>
             </div>
           ))}

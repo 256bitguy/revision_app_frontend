@@ -1,0 +1,151 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-box h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  background: #fafafa;
+}
+
+.modal-box textarea {
+  min-height: 80px;
+}
+
+.point-block,
+.subheading-block {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f1f1f5;
+  border-left: 4px solid #4caf50;
+  border-radius: 8px;
+}
+
+.point-block input {
+  margin-bottom: 0.5rem;
+}
+
+.add-btn,
+.remove-btn {
+  margin-right: 1rem;
+  background-color: #00796b;
+  color: white;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.add-btn:hover,
+.remove-btn:hover {
+  background-color: #004d40;
+}
+
+.remove-btn {
+  background-color: #b71c1c;
+}
+
+.remove-btn:hover {
+  background-color: #7f0000;
+}
+
+.modal-box .button-row {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.button-row button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.button-row .save-btn {
+  background-color: #1e88e5;
+  color: white;
+}
+
+.button-row .save-btn:hover {
+  background-color: #1565c0;
+}
+
+.button-row .cancel-btn {
+  background-color: #eee;
+  color: #333;
+}
+
+.button-row .cancel-btn:hover {
+  background-color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .modal-box {
+    padding: 1.2rem;
+  }
+
+  .modal-box h2 {
+    font-size: 1.2rem;
+  }
+
+  .button-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .button-row button {
+    width: 100%;
+  }
+}

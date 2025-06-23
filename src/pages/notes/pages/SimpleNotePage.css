@@ -1,0 +1,34 @@
+.simple-note-page {
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.simple-note-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.simple-note-page p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.open-modal-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.open-modal-button:hover {
+  background-color: #004d40;
+}

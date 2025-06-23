@@ -12,6 +12,8 @@ import AttemptQuestionPage from "../pages/questions/pages/AttemptQuestionPage";
 import AllUsers from "../pages/users/AllUsers";
 import AttemptVocabularyPage from "../pages/vocabulary/pages/AttemptVocabularyPage";
 import VocabularyListPage from "../pages/vocabulary/pages/VocabularyListPage";
+import NotesDetailPage from "../pages/notes/pages/NotesDetailPage";
+import SimpleNotePage from "../pages/notes/pages/SimpleNotePage";
 
 const AppRouter = () => (
   <Routes>
@@ -38,6 +40,12 @@ const AppRouter = () => (
       path="/topics/vocabulary/practice"
       element={<AttemptVocabularyPage />}
     />
+     <Route
+        path="/notes/:topicId"
+        element={<NotesDetailPage />}
+      />
+      <Route path="/test-note/:topicId" element={<SimpleNotePage />} />
+
   </Routes>
 );
 

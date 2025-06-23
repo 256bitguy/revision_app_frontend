@@ -27,12 +27,7 @@ callFun();
       <h2>Questions for "{topicName}"</h2>
 
       <div className="tab-toggle">
-        <button
-          className={activeTab === "notes" ? "active" : ""}
-          onClick={() => setActiveTab("notes")}
-        >
-          Notes / Story
-        </button>
+        
         <Link
           to={`/topics/${topicId}/attempt`}
         >
