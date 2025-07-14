@@ -13,6 +13,12 @@ const AttemptQuestionPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+
+  const [timerDuration, setTimerDuration] = useState<number | null>(null); // seconds
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [timerActive, setTimerActive] = useState(false);
+  const [showTimeUpModal, setShowTimeUpModal] = useState(false);
+
   useEffect(() => {
     if (topicId) {
       dispatch(fetchQuestionsByTopic(topicId));
@@ -23,17 +29,56 @@ const AttemptQuestionPage = () => {
   const isCorrect =
     selectedOption !== null && current?.correctOption?.includes(selectedOption);
 
+  // Timer countdown logic
+  useEffect(() => {
+    let interval = 0;
+
+    if (timerActive && timeLeft !== null && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => (prev !== null ? prev - 1 : null));
+      }, 1000);
+    } else if (timerActive && timeLeft === 0) {
+      clearInterval(interval);
+      setTimerActive(false);
+      setShowTimeUpModal(true);
+    }
+
+    return () => clearInterval(interval);
+  }, [timeLeft, timerActive]);
+
+  // Restart timer on each new question
+  useEffect(() => {
+    if (timerDuration !== null && questions.length > 0) {
+      setTimeLeft(timerDuration);
+      setTimerActive(true);
+    }
+  }, [currentIndex, timerDuration]);
+
+  const handleTimerStart = (seconds: number) => {
+    setTimerDuration(seconds);
+    setTimeLeft(seconds);
+    setTimerActive(true);
+    setShowTimeUpModal(false);
+  };
+
   const handleNext = () => {
     setShowAnswer(false);
     setSelectedOption(null);
-    if (currentIndex < questions.length - 1)
+    setTimerActive(false);
+    setTimeLeft(null);
+    if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
+    }
   };
 
   const handlePrevious = () => {
     setShowAnswer(false);
     setSelectedOption(null);
-    if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+    setTimerActive(false);
+    setTimeLeft(null);
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
   };
 
   if (loading) {
@@ -51,9 +96,22 @@ const AttemptQuestionPage = () => {
           Question {currentIndex + 1} / {questions.length}
         </div>
 
+        <div className="timer-buttons">
+          <button onClick={() => handleTimerStart(60)}>⏱ 1 Min</button>
+          <button onClick={() => handleTimerStart(180)}>⏱ 3 Min</button>
+          <button onClick={() => handleTimerStart(300)}>⏱ 5 Min</button>
+        </div>
+
+        {timerActive && timeLeft !== null && (
+          <div className="countdown-timer">
+            ⏳ Time Left: {Math.floor(timeLeft / 60)}:
+            {String(timeLeft % 60).padStart(2, "0")}
+          </div>
+        )}
+
         {current?.statements?.length > 0 && (
           <div className="statement-section">
-            {current.statements?.map((s, i) => (
+            {current.statements.map((s, i) => (
               <p key={i}>
                 <strong>{s.order}.</strong> {s.statement}
               </p>
@@ -125,6 +183,23 @@ const AttemptQuestionPage = () => {
           </button>
         </div>
       </div>
+
+      {showTimeUpModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>⏰ Time's Up!</h3>
+            <p>Your time for this question has ended.</p>
+            <button
+              onClick={() => {
+                setShowTimeUpModal(false);
+                handleNext();
+              }}
+            >
+              Next Question ➡️
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
