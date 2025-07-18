@@ -97,6 +97,9 @@ const AttemptQuestionPage = () => {
         </div>
 
         <div className="timer-buttons">
+          <button onClick={() => handleTimerStart(10)}>⏱ 10 sec</button>
+          <button onClick={() => handleTimerStart(20)}>⏱ 20 sec</button>
+          <button onClick={() => handleTimerStart(30)}>⏱ 30 sec</button>
           <button onClick={() => handleTimerStart(60)}>⏱ 1 Min</button>
           <button onClick={() => handleTimerStart(180)}>⏱ 3 Min</button>
           <button onClick={() => handleTimerStart(300)}>⏱ 5 Min</button>
