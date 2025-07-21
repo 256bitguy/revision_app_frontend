@@ -1,105 +1,199 @@
+ /* General Page Styling */
 .notes-detail-page {
-  padding: 2rem;
-  background-color: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1f2937;
   min-height: 100vh;
-  font-family: "Segoe UI", sans-serif;
+}
+ 
+/* Page Title */
+.notes-detail-page h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+.hover-grow {
+  transition: font-size 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #222;
-  text-align: center;
+.hover-grow:hover {
+  font-size: 1.2em; /* Increase font size */
+  transform: scale(1.05); /* Optional: slight zoom */
 }
 
-.note-block {
-  margin-bottom: 2.5rem;
-  padding: 1.5rem;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+/* Note Card Container */
+.note-card {
+  background: #6b9eb3;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+  
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease-in-out;
 }
 
+.note-card:hover {
+  transform: scale(1.02);
+}
+
+/* Heading */
 .note-heading {
-  font-size: 1.5rem;
-  color: #00796b;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  margin-bottom: 1.2rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
 }
 
-.subheading-block {
-  margin-bottom: 1.5rem;
-  padding-left: 1rem;
-  border-left: 4px solid #26a69a;
-}
-
+/* Subheading */
 .subheading-block h3 {
-  font-size: 1.2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  color: #2e86de;
+  margin: 1rem 0 0.6rem;
 }
 
+/* Point Label & Explanation */
 .point-row {
+  font-size: 1rem;
   margin-left: 1rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px dashed #ccc;
-  font-size: 0.95rem;
-  color: #444;
+  margin-bottom: 0.6rem;
+  color: #333;
 }
 
 .point-row strong {
-  color: #111;
+  color: #000;
 }
 
-.example {
-  margin-left: 1.5rem;
-  font-style: italic;
-  font-size: 0.9rem;
-  color: #555;
-}
-
+/* Examples */
+.example,
 .sub-example,
 .linking-note,
 .query,
 .query-explained {
-  margin-left: 1.2rem;
-  margin-top: 0.4rem;
-  padding-left: 0.5rem;
-  border-left: 3px solid #eee;
-  font-size: 0.92rem;
-  color: #444;
+  background-color: #f1f5f9;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  margin: 0.8rem 0;
+  font-size: 0.95rem;
+  border-left: 4px solid #4f46e5;
+  color: #2c3e50;
 }
 
-.query {
-  color: #d84315;
-  font-weight: 500;
+/* Highlighted Labels */
+.query strong,
+.query-explained strong,
+.linking-note strong,
+.sub-example strong {
+  color: #111827;
 }
 
-.query-explained {
-  color: #388e3c;
-  font-weight: 500;
-}
+/* Navigation Buttons */
+/* NotesNavigationButtons.css */
 
-.linking-note {
-  color: #5c6bc0;
-}
-
-.loading {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #888;
-}
-.add-note-button {
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
   margin-top: 2rem;
-  padding: 10px 20px;
-  background-color: #00796b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
 }
 
-.add-note-button:hover {
-  background-color: #004d40;
+.nbutton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.navigation-buttons button:hover {
+  background: linear-gradient(135deg, #4338ca, #4f46e5);
+  transform: translateY(-2px);
+}
+
+.navigation-buttons button:disabled {
+  background: #c7d2fe;
+  color: #fff;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.nav-buttons button:hover {
+  background-color: #4f46e5;
+}
+
+/* Timer and Checkbox */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  margin: 1.5rem 0;
+  padding: 0 1rem;
+}
+
+.controls input[type="checkbox"] {
+  transform: scale(1.4);
+  margin-right: 0.5rem;
+}
+
+/* Timer Button */
+.timer-button {
+  padding: 0.6rem 1.2rem;
+  background-color: #22c55e;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.timer-button:hover {
+  background-color: #16a34a;
+}
+
+/* Timer Modal */
+.timer-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  text-align: center;
+}
+
+.timer-modal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.timer-modal button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.timer-modal button:hover {
+  background-color: #2563eb;
 }

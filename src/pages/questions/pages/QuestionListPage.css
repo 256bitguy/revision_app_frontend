@@ -34,19 +34,20 @@
 }
 
 .question-list {
+  /* background: #f9f9f9; */
   list-style: none;
   padding: 0;
   margin-top: 1rem;
 }
 
 .question-item {
-  background: #f0f8ff;
+  background: #445a6d;
   margin-bottom: 0.8rem;
   padding: 1rem;
   border-radius: 8px;
   border-left: 5px solid #2d8fbd;
   font-weight: 500;
-  color: #222;
+  color: #f6f6f6;
 }
 
 .add-question-button {

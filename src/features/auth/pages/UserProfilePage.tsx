@@ -3,33 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import './UserProfilePage.css';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
 import { logout } from '../slices/authSlice';
- 
+
 const UserProfilePage: React.FC = () => {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  if (!user) return <div>Loading user info...</div>;
+  if (!user) return <div className="loading">Loading user info...</div>;
 
   const handleLogout = () => {
     dispatch(logout());
-    // If you store tokens in localStorage/sessionStorage, clear them here as well
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    navigate('/login'); // or wherever your login page is
+    navigate('/login');
   };
 
   return (
     <div className="user-profile-container">
-      <div className="action-buttons">
-        <button className="btn btn-primary" onClick={() => navigate('/subjects')}>
-          Go to Subjects
-        </button>
-        <button className="btn btn-secondary" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-
       {user.coverImage && (
         <div
           className="user-cover"
@@ -37,7 +27,7 @@ const UserProfilePage: React.FC = () => {
         />
       )}
 
-      <div className="user-info-section">
+      <div className="user-info-card">
         <img
           src={user.avatar}
           alt={`${user.fullName} avatar`}
@@ -47,6 +37,19 @@ const UserProfilePage: React.FC = () => {
           <h1>{user.fullName}</h1>
           <p><strong>Username:</strong> @{user.username}</p>
           <p><strong>Email:</strong> {user.email}</p>
+        </div>
+        <button className="btn logout-btn" onClick={handleLogout}>Logout</button>
+      </div>
+
+      <div className="practice-section">
+        <h2>Practice Modules</h2>
+        <div className="practice-buttons">
+          <button className="btn btn-subjects" onClick={() => navigate('/subjects')}>Go to Subjects</button>
+          <button className="btn btn-addition" onClick={() => navigate('/additionquiz')}>Addition Practice</button>
+          <button className="btn btn-subtraction" onClick={() => navigate('/subtractionquiz')}>Subtraction Practice</button>
+          <button className="btn btn-multiplication" onClick={() => navigate('/multiplicationquiz')}>Multiplication Practice</button>
+          <button className="btn btn-division" onClick={() => navigate('/fractionquizconverter')}>Fraction Practice</button>
+          <button className="btn btn-series" onClick={() => navigate('/additionquiz')}>Number Series Practice</button>
         </div>
       </div>
     </div>

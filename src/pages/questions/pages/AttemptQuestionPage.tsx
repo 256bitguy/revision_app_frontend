@@ -91,7 +91,7 @@ const AttemptQuestionPage = () => {
 
   return (
     <div className="attempt-page">
-      <div className="question-box">
+      <div  >
         <div className="question-count">
           Question {currentIndex + 1} / {questions.length}
         </div>
@@ -124,7 +124,8 @@ const AttemptQuestionPage = () => {
 
         {current?.question && (
           <div className="question-text">
-            <strong>Q:</strong> {current.question}
+            <strong>Q:</strong> 
+            {current.question}
           </div>
         )}
 

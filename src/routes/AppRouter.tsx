@@ -14,6 +14,10 @@ import AttemptVocabularyPage from "../pages/vocabulary/pages/AttemptVocabularyPa
 import VocabularyListPage from "../pages/vocabulary/pages/VocabularyListPage";
 import NotesDetailPage from "../pages/notes/pages/NotesDetailPage";
 import SimpleNotePage from "../pages/notes/pages/SimpleNotePage";
+import AdditionQuiz from "../pages/maths/calculation/addition/AdditionQuiz";
+import SubtractionQuizPage from "../pages/maths/calculation/subtraction/SubtractionQuizPage";
+import MultiplicationQuizPage from "../pages/maths/calculation/multiplication/MultiplicationQuizPage";
+import PercentageFractionConverterApp from "../pages/maths/calculation/fractionSum/converter/PercentageFractionConverterApp";
 
 const AppRouter = () => (
   <Routes>
@@ -45,6 +49,10 @@ const AppRouter = () => (
         element={<NotesDetailPage />}
       />
       <Route path="/test-note/:topicId" element={<SimpleNotePage />} />
+      <Route path="/additionquiz" element={<AdditionQuiz />} />
+      <Route path="/subtractionquiz" element={<SubtractionQuizPage />} />
+      <Route path="/multiplicationquiz" element={<MultiplicationQuizPage />} />
+      <Route path="/fractionquizconverter" element={<PercentageFractionConverterApp />} />
 
   </Routes>
 );
