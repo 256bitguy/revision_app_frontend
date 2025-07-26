@@ -64,7 +64,7 @@ const MultiplicationQuizPage: React.FC = () => {
     setUserAnswer('');
     setShowResult(false);
     setIsCorrect(false);
-    setTimeLeft(10);
+    setTimeLeft(11);
     if (mode === 'custom') {
       setNum1(Math.floor(Math.random() * 99) + 2);
       setNum2(Math.floor(Math.random() * 99) + 2);
@@ -74,7 +74,7 @@ const MultiplicationQuizPage: React.FC = () => {
   };
 
   const handleStartTimer = () => {
-    setTimeLeft(10);
+    setTimeLeft(11);
     setStarted(true);
     setShowResult(false);
   };

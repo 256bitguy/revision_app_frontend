@@ -19,6 +19,7 @@ import SubtractionQuizPage from "../pages/maths/calculation/subtraction/Subtract
 import MultiplicationQuizPage from "../pages/maths/calculation/multiplication/MultiplicationQuizPage";
 import PercentageFractionConverterApp from "../pages/maths/calculation/fractionSum/converter/PercentageFractionConverterApp";
 import Alphabet from "../pages/maths/alphabet/Alphabet";
+import NumberPattern from "../pages/maths/numberseries/type1/NumberPattern";
 
 const AppRouter = () => (
   <Routes>
@@ -55,6 +56,7 @@ const AppRouter = () => (
       <Route path="/multiplicationquiz" element={<MultiplicationQuizPage />} />
       <Route path="/fractionquizconverter" element={<PercentageFractionConverterApp />} />
       <Route path="/alphabet" element={<Alphabet />} />
+      <Route path="/pattern" element={<NumberPattern />} />
 
 
   </Routes>

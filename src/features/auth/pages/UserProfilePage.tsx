@@ -51,6 +51,7 @@ const UserProfilePage: React.FC = () => {
           <button className="btn btn-division" onClick={() => navigate('/fractionquizconverter')}>Fraction Practice</button>
           <button className="btn btn-series" onClick={() => navigate('/additionquiz')}>Number Series Practice</button>
           <button className="btn btn-series" onClick={() => navigate('/alphabet')}>Alphabet Practice</button>
+          <button className="btn btn-series" onClick={() => navigate('/pattern')}>Alphabet Practice</button>
         </div>
       </div>
     </div>

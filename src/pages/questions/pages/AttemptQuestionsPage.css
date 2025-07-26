@@ -20,15 +20,30 @@ body {
 .attempt-page {
   position: relative;
   min-height: 100vh;
-  padding: 40px 20px;
+  
   background: url("https://www.transparenttextures.com/patterns/stardust.png");
   animation: moveStars 200s linear infinite;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: flex-start;
   color: #882323;
+    
+  gap: 20px;
+   
+  padding: 20px;
+  
 }
+ 
+.page {
+  display:flex;
 
+}
+@media screen {
+  .page{
+    display: flex;
+    
+  }
+}
 /* Beautiful question box with glowing effect */
 .question-box {
   background: rgba(103, 105, 159, 0.9);
@@ -63,6 +78,29 @@ body {
   gap: 8px;
   justify-content: center;
   margin-bottom: 15px;
+}
+/* Score Section */
+.score {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #3b82f6; /* Tailwind blue-500 */
+  background-color: #e0f2fe; /* Tailwind blue-100 */
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.final-score-box {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #ecfccb; /* Tailwind green-100 */
+  border: 2px solid #22c55e; /* Tailwind green-500 */
+  border-radius: 10px;
+  text-align: center;
+  color: #166534; /* Tailwind green-700 */
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .timer-buttons button {
@@ -100,7 +138,7 @@ body {
   border-left: 4px solid #66fcf1;
   border-radius: 6px;
   color: #d09898;
-  font-size: 1rem;
+  font-size: 0.2 rem;
   line-height: 1.6;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
 }
@@ -240,4 +278,164 @@ body {
 
 .modal-content button:hover {
   background-color: #6c7ae0;
+}
+ 
+
+.quiz-content {
+  flex: 2;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.question-tracker {
+  width: 400px;
+  background: #f7f7f7;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.question-tracker h3 {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.tracker-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.tracker-item {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ddd;
+  transition: 0.3s ease;
+}
+
+.tracker-item.correct {
+  background-color: #c2f5c2;
+  color: #1a661a;
+}
+
+.tracker-item.incorrect {
+  background-color: #f5c2c2;
+  color: #aa1d1d;
+}
+
+.tracker-item.unanswered {
+  background-color: #eeeeee;
+}
+
+.tracker-item.active {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 6px #007bff77;
+}
+/* Responsive layout for .attempt-page */
+.attempt-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Stack content on smaller screens */
+@media (max-width: 1024px) {
+  .attempt-page {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quiz-content,
+  .question-tracker {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .question-tracker {
+    order: 1; /* Move it below the question on smaller screens */
+    margin-top: 20px;
+  }
+
+  .quiz-content {
+    order: 0;
+  }
+}
+
+/* Medium devices (tablet) adjustments */
+@media (max-width: 768px) {
+  .question-box {
+    padding: 25px 20px;
+  }
+
+  .option-button {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  .toggle-answer,
+  .navigation-buttons button,
+  .timer-buttons button {
+    font-size: 0.95rem;
+    padding: 8px 14px;
+  }
+
+  .score,
+  .final-score-box,
+  .question-count {
+    font-size: 1rem;
+  }
+}
+
+/* Small devices (phones) */
+@media (max-width: 480px) {
+  .timer-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .option-button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navigation-buttons button {
+    width: 100%;
+  }
+
+  .question-count,
+  .score {
+    text-align: center;
+  }
+
+  .tracker-item {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .question-box {
+    padding: 20px;
+  }
 }
