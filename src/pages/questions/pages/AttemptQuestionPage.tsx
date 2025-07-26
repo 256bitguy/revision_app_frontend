@@ -18,6 +18,7 @@ const AttemptQuestionPage = () => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
   const [showTimeUpModal, setShowTimeUpModal] = useState(false);
+const [showQuestionTracker, setShowQuestionTracker] = useState(false);
 
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(
@@ -229,46 +230,53 @@ const AttemptQuestionPage = () => {
             </div>
           </div>
         )}
+          <button onClick={() => setShowQuestionTracker(true)} className="show-tracker-button">
+  📋 Show All Questions
+</button>
       </div>
-     
-      <div className="question-tracker">
-        <h3>📋 Questions</h3>
-        <div className="tracker-list">
-          {questions.map((_, index) => {
-            // const isAnswered = answeredQuestions.has(index);
-            const isCurrent = index === currentIndex;
-            // const selected = index < currentIndex ? true : false;
-            let status = "unanswered";
-            if (answeredQuestions.has(index)) {
-              const userSelectedCorrect =
-                questions[index].correctOption?.includes(
-                  selectedOption as number
-                ) && index === currentIndex;
-              status = userSelectedCorrect ? "correct" : "incorrect";
-            }
+   
 
-            return (
-              <button
-                key={index}
-                className={`tracker-item ${status} ${
-                  isCurrent ? "active" : ""
-                }`}
-                onClick={() => setCurrentIndex(index)}
-              >
-                {index + 1}
-              </button>
-            );
-          })}
-        </div>
-         {currentIndex === questions.length - 1 && (
-        <div className="final-score-box">
-          <h3>✅ Quiz Completed!</h3>
-          <p>
-            Your Final Score: {score} / {questions.length}
-          </p>
-        </div>
-      )}
+   {showQuestionTracker && (
+  <div className="modal">
+    <div className="modal-content">
+      <h3>📋 Questions</h3>
+      <div className="tracker-list">
+        {questions.map((_, index) => {
+          const isCurrent = index === currentIndex;
+          let status = "unanswered";
+          if (answeredQuestions.has(index)) {
+            const userSelectedCorrect =
+              questions[index].correctOption?.includes(
+                selectedOption as number
+              ) && index === currentIndex;
+            status = userSelectedCorrect ? "correct" : "incorrect";
+          }
+
+          return (
+            <button
+              key={index}
+              className={`tracker-item ${status} ${isCurrent ? "active" : ""}`}
+              onClick={() => {
+                setCurrentIndex(index);
+                setShowQuestionTracker(false); // Close tracker after selection
+              }}
+            >
+              {index + 1}
+            </button>
+          );
+        })}
       </div>
+
+      <button
+        className="close-modal"
+        onClick={() => setShowQuestionTracker(false)}
+      >
+        ❌ Close
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

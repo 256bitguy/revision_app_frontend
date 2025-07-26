@@ -124,9 +124,47 @@ export const increasedSquare = () => {
     timer: 30,
   };
 };
+// utils/patternGenerators.ts
+
+export const primePattern = () => {
+  const primes = [
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+    31, 37, 41, 43, 47, 53, 59, 61, 67,
+    71, 73, 79, 83, 89, 97,
+  ];
+
+  const k = Math.floor(Math.random() * 50); // Starting point
+  const newPattern: number[] = [k];
+
+  const c = Math.floor(Math.random() * primes.length);
+  for (let i = 1; i < 6; i++) {
+    newPattern[i] = newPattern[i - 1] + primes[c+i];
+  }
+
+  const missIndex = Math.floor(Math.random() * 6);
+  const answer = newPattern[missIndex];
+
+  const opts = new Set<number>();
+  opts.add(answer);
+  while (opts.size < 4) {
+    const fake = answer + Math.floor(Math.random() * 11) - 5;
+    if (!opts.has(fake)) opts.add(fake);
+  }
+
+  return {
+    pattern: newPattern,
+    missingIndex: missIndex,
+    correctAnswer: answer,
+    options: Array.from(opts).sort(() => 0.5 - Math.random()),
+    timer: 30,
+    type: "primePattern",
+  };
+};
+
 export const allFunctions = [
   increasedMultiply,
   simpleSum,
   simpleSquare,
 //   increasedSquare,
+primePattern
 ];

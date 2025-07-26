@@ -8,39 +8,31 @@ const NumberPattern: React.FC = () => {
   const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const [timer, setTimer] = useState<number>(20);
-const [showExplanation, setShowExplanation] = useState<boolean>(false);
-const [type,setType] = useState<string>();
- 
-const handleGenerate = () => {
-  // Get all function values into an array
-  const functionList = Object.values(allFunctions);
+  const [showExplanation, setShowExplanation] = useState<boolean>(false);
+  const [type, setType] = useState<string>();
 
-  // Pick a random function
-  const randomFunction = functionList[Math.floor(Math.random() * functionList.length)];
+  const handleGenerate = () => {
+    const functionList = Object.values(allFunctions);
 
-  // Call the chosen function
-  const {
-    pattern,
-    missingIndex,
-    correctAnswer,
-    type,
-    options,
-    timer,
-  } = randomFunction();
-setType(type)
-  setShowExplanation(false);
-  setPattern(pattern);
-  setMissingIndex(missingIndex);
-  setCorrectAnswer(correctAnswer);
-  setOptions(options);
-  setSelected(null);
-  setTimer(timer);
-};
+    const randomFunction =
+      functionList[Math.floor(Math.random() * functionList.length)];
 
-// useEffect to call on first render
-useEffect(() => {
-  handleGenerate();
-}, []);
+    const { pattern, missingIndex, correctAnswer, type, options, timer } =
+      randomFunction();
+    setType(type);
+    setShowExplanation(false);
+    setPattern(pattern);
+    setMissingIndex(missingIndex);
+    setCorrectAnswer(correctAnswer);
+    setOptions(options);
+    setSelected(null);
+    setTimer(timer);
+  };
+
+  // useEffect to call on first render
+  useEffect(() => {
+    handleGenerate();
+  }, []);
 
   useEffect(() => {
     if (timer === 0) return;
@@ -48,8 +40,6 @@ useEffect(() => {
     return () => clearInterval(interval);
   }, [timer]);
 
-
- 
   const handleOptionClick = (opt: number) => {
     if (selected === null) setSelected(opt);
   };
@@ -93,43 +83,52 @@ useEffect(() => {
         ))}
       </div>
 
-     {(selected !== null || timer === 0) && (
-  <>
-    <div className="result-msg">
-      {selected === correctAnswer ? "✅ Correct!" : "❌ Wrong!"} Correct Answer: {correctAnswer}
-    </div>
+      {(selected !== null || timer === 0) && (
+        <>
+          <div className="result-msg">
+            {selected === correctAnswer ? "✅ Correct!" : "❌ Wrong!"} Correct
+            Answer: {correctAnswer}
+          </div>
 
-    {!showExplanation && (
-      <button className="reveal-btn" onClick={() => setShowExplanation(true)}>
-        Reveal Explanation
+          {!showExplanation && (
+            <button
+              className="reveal-btn"
+              onClick={() => setShowExplanation(true)}
+            >
+              Reveal Explanation
+            </button>
+          )}
+
+          {showExplanation &&
+            pattern.length === 6 &&
+            correctAnswer !== null && (
+              <div className="pattern-explanation">
+                <h4>Pattern Explanation:</h4>
+                <h3> dfs {type}</h3>
+                <ul>
+                  {pattern.map((num, idx) => {
+                    if (idx === 0) {
+                      return <li key={idx}>arr[0] = {num} (initial value)</li>;
+                    } else {
+                      const prev = pattern[idx - 1];
+                      const diff = num - prev;
+                      return (
+                        <li key={idx}>
+                          arr[{idx}] = arr[{idx - 1}] + {diff} = {prev} + {diff}{" "}
+                          = {num}
+                        </li>
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
+            )}
+        </>
+      )}
+
+      <button className="next-btn" onClick={handleGenerate}>
+        Next
       </button>
-    )}
-
-    {showExplanation && pattern.length === 6 && correctAnswer !== null && (
-      <div className="pattern-explanation">
-        <h4>Pattern Explanation:</h4>
-        <h3> dfs {type}</h3>
-        <ul>
-          {pattern.map((num, idx) => {
-            if (idx === 0) {
-              return <li key={idx}>arr[0] = {num} (initial value)</li>;
-            } else {
-              const prev = pattern[idx - 1];
-              const diff = num - prev;
-              return (
-                <li key={idx}>
-                  arr[{idx}] = arr[{idx - 1}] + {diff} = {prev} + {diff} = {num}
-                </li>
-              );
-            }
-          })}
-        </ul>
-      </div>
-    )}
-  </>
-)}
-
-
       <button className="next-btn" onClick={handleGenerate}>
         Next
       </button>
