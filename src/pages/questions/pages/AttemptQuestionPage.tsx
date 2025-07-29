@@ -9,8 +9,8 @@ const AttemptQuestionPage = () => {
   const dispatch = useAppDispatch();
   const questions = useAppSelector((state) => state.questions.questions);
   const loading = useAppSelector((state) => state.questions.loading);
-
   const [currentIndex, setCurrentIndex] = useState(0);
+ 
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -219,6 +219,7 @@ const [showQuestionTracker, setShowQuestionTracker] = useState(false);
             <div className="modal-content">
               <h3>⏰ Time's Up!</h3>
               <p>Your time for this question has ended.</p>
+              <p>{questions[currentIndex].answer}</p>
               <button
                 onClick={() => {
                   setShowTimeUpModal(false);
