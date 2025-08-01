@@ -44,8 +44,8 @@ const AttemptVocabularyPage = () => {
 
   return (
     <div className="attempt-page">
-      <div className="question-box">
-        <div className="question-count">
+      <div className="question-boxing">
+        <div className="question-counting">
           Vocabulary {currentIndex + 1} / {vocabList.length}
         </div>
 
@@ -82,25 +82,9 @@ const AttemptVocabularyPage = () => {
               <p>
                 <strong>Q:</strong> {blank.question}
               </p>
-              <div className="option-list">
-                {shuffledOptions.map((opt, i) => {
-                  const isCorrect = opt === blank.word;
-                  const isSelected = selectedBlankWord === opt;
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedBlankWord(opt)}
-                      className={`option-button ${
-                        isSelected ? (isCorrect ? "correct" : "incorrect") : ""
-                      }`}
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
-              </div>
+              
               {showAnswer && (
-                <div className="answer-box">
+                <div className="answer-boxing">
                   <strong>Correct Word:</strong> {blank.word}
                 </div>
               )}

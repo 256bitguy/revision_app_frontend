@@ -6,7 +6,7 @@
   color: #333;
 }
 
-.question-box {
+.question-boxing {
   background-color: #fdfdfd;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -14,7 +14,7 @@
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
 }
 
-.question-count {
+.question-counting {
   font-weight: bold;
   margin-bottom: 1rem;
   color: #666;
@@ -62,7 +62,7 @@
   margin-top: 1rem;
 }
 
-.answer-box {
+.answer-boxing {
   margin-top: 1rem;
   background-color: #f0f8ff;
   padding: 0.8rem 1rem;
