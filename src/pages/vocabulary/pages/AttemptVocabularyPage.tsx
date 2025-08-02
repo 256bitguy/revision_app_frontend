@@ -8,9 +8,7 @@ const AttemptVocabularyPage = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedSynonym, setSelectedSynonym] = useState<string | null>(null);
-  const [selectedBlankWord, setSelectedBlankWord] = useState<string | null>(
-    null
-  );
+  
   const [showAnswer, setShowAnswer] = useState(false);
 
   const current = vocabList[currentIndex];
@@ -22,7 +20,7 @@ const AttemptVocabularyPage = () => {
 
   const handleNext = () => {
     setSelectedSynonym(null);
-    setSelectedBlankWord(null);
+    
     setShowAnswer(false);
     if (currentIndex < vocabList.length - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -31,7 +29,7 @@ const AttemptVocabularyPage = () => {
 
   const handlePrevious = () => {
     setSelectedSynonym(null);
-    setSelectedBlankWord(null);
+    
     setShowAnswer(false);
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
