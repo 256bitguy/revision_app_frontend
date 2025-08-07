@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../../../hooks/hooks";
-import "./AttemptVocabularyPage.css"; // you can reuse existing styles
+import "./AttemptVocabularyPage.css";
 
 const AttemptVocabularyPage = () => {
   const vocabList = useAppSelector((state) => state.vocabulary.vocabulary);
@@ -8,8 +8,13 @@ const AttemptVocabularyPage = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedSynonym, setSelectedSynonym] = useState<string | null>(null);
-  
   const [showAnswer, setShowAnswer] = useState(false);
+
+  // Timer states
+  const [customTime, setCustomTime] = useState(30); // default
+  const [timeLeft, setTimeLeft] = useState(customTime);
+  const [isRunning, setIsRunning] = useState(false);
+  const [showTimeUpModal, setShowTimeUpModal] = useState(false);
 
   const current = vocabList[currentIndex];
 
@@ -18,21 +23,47 @@ const AttemptVocabularyPage = () => {
     ...(current?.antonyms || []),
   ].sort();
 
+  // Timer effect
+  useEffect(() => {
+    let timer =0
+    if (isRunning && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    }
+    if (timeLeft === 0 && isRunning) {
+      setIsRunning(false);
+      setShowTimeUpModal(true);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isRunning, timeLeft]);
+
+  const startTimer = (seconds: number) => {
+    setCustomTime(seconds);
+    setTimeLeft(seconds);
+    setIsRunning(true);
+    setShowTimeUpModal(false);
+  };
+
   const handleNext = () => {
     setSelectedSynonym(null);
-    
     setShowAnswer(false);
+    setShowTimeUpModal(false);
     if (currentIndex < vocabList.length - 1) {
       setCurrentIndex((prev) => prev + 1);
+      startTimer(customTime);
     }
   };
 
   const handlePrevious = () => {
     setSelectedSynonym(null);
-    
     setShowAnswer(false);
+    setShowTimeUpModal(false);
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
+      startTimer(customTime);
     }
   };
 
@@ -45,6 +76,24 @@ const AttemptVocabularyPage = () => {
       <div className="question-boxing">
         <div className="question-counting">
           Vocabulary {currentIndex + 1} / {vocabList.length}
+        </div>
+
+        {/* Timer UI */}
+        <div className="timer-sections">
+          <span>Set Time:</span>
+          <div className="timer-buttons">
+            <button onClick={() => startTimer(10)}>10s</button>
+            <button onClick={() => startTimer(20)}>20s</button>
+            <button onClick={() => startTimer(30)}>30s</button>
+            <button onClick={() => startTimer(60)}>1 min</button>
+          </div>
+          <div
+            className={`timer-displays ${
+              timeLeft <= 10 ? "timer-warnings" : ""
+            }`}
+          >
+            ⏳ {timeLeft}s
+          </div>
         </div>
 
         <h2>{current?.word}</h2>
@@ -80,7 +129,7 @@ const AttemptVocabularyPage = () => {
               <p>
                 <strong>Q:</strong> {blank.question}
               </p>
-              
+
               {showAnswer && (
                 <div className="answer-boxing">
                   <strong>Correct Word:</strong> {blank.word}
@@ -109,6 +158,16 @@ const AttemptVocabularyPage = () => {
           </button>
         </div>
       </div>
+
+      {/* Time Up Modal */}
+      {showTimeUpModal && (
+        <div className="modal-overlays">
+          <div className="modals">
+            <h2>⏰ Time’s Up!</h2>
+            <button onClick={handleNext}>Go to Next Question ➡️</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
