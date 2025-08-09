@@ -139,7 +139,7 @@ const [showQuestionTracker, setShowQuestionTracker] = useState(false);
             </div>
           )}
   {current?.question && (
-            <div className="question-text">
+            <div  style={{fontSize:"24px", color:"#995f5f"}}>
               <strong>Q:</strong> {current.question}
             </div>
           )}
